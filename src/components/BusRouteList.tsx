@@ -1,6 +1,8 @@
 import React from "react";
+import { useRouter } from "next/navigation";
 
 function BusRouteList({ filteredData }) {
+  const router = useRouter();
   return (
     <div className="w-[42rem] flex flex-col">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -53,7 +55,9 @@ function BusRouteList({ filteredData }) {
                       {route.price}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
-                      <button>Buy</button>
+                      <button onClick={()=>{
+                        router.push("/ticketsales");
+                      }}>Buy</button>
                     </td>
                   </tr>
                 ))}

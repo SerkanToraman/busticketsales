@@ -15,6 +15,8 @@ function BusRoute() {
   const [to, setTo] = useState("");
   const [date, setDate] = useState("");
   const [filteredData, setFilteredData] = useState([]);
+  const [submitClicked, setSubmitClicked] = useState(false);
+  const [showNoJourneyFound, setShowNoJourneyFound] = useState(false);
   const fetchDataAndFilter = async () => {
     try {
       const response = await fetch(
@@ -35,6 +37,13 @@ function BusRoute() {
         );
       });
       setFilteredData(filtered);
+      setSubmitClicked(true);
+      if (filtered.length === 0) {
+        setShowNoJourneyFound(true);
+        setTimeout(() => {
+          setShowNoJourneyFound(false);
+        }, 3000); 
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -106,11 +115,15 @@ function BusRoute() {
           </button>
         </div>
       </form>
-      {filteredData.length > 0 ? (
-        <BusRouteList filteredData={filteredData} />
-      ) : (
-        <p>No journey found.</p>
-      )}
+      {submitClicked ? (
+        filteredData.length > 0 ? (
+          <BusRouteList filteredData={filteredData} />
+        ) : showNoJourneyFound ? (
+          <p className="flex items-center justify-center h-12 my-6 text-red-500 overflow-hidden block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+            No journey found.
+          </p>
+        ) : null
+      ) : null}
     </div>
   );
 }
