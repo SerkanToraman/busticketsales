@@ -1,8 +1,16 @@
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useJourneyContext } from "@/context/JourneyContext";
 
 function BusRouteList({ filteredData }) {
   const router = useRouter();
+  const { journeyData, setJourneyData } = useJourneyContext();
+
+
+  const handleBuyClick = (route) => {
+    setJourneyData([...journeyData, route]);
+    router.push("/ticketsales");
+  };
   return (
     <div className="w-[42rem] flex flex-col">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -56,6 +64,7 @@ function BusRouteList({ filteredData }) {
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
                       <button onClick={()=>{
+                        handleBuyClick(route);
                         router.push("/ticketsales");
                       }}>Buy</button>
                     </td>
@@ -72,18 +81,3 @@ function BusRouteList({ filteredData }) {
 
 export default BusRouteList;
 
-// <section className="relative w-[32rem]">
-//     {filteredData.map((route) => (
-//       <div className="min-h-fit p-3 md:p-6  block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 " key={route.id}>
-//         <h5>Route Details:</h5>
-//         <div><p>From:</p><p><p>From: {route.from}</p></p></div>
-
-//         <p>To: {route.to}</p>
-//         <p>Date: {route.date}</p>
-//         <p>Empty Seat Count: {route.emptySeatCount}</p>
-//         <p>Price: {route.Price}</p>
-//       </div>
-//     ))}
-//   </section>
-
-// <div>BusRouteList</div>

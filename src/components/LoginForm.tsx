@@ -1,7 +1,9 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useUserContext } from "@/context/UserContext";
 
 const LoginForm = () => {
+  const { user, login, logout } = useUserContext();
   useEffect(() => {
     const init = async () => {
       const { Dropdown, Ripple, Datepicker, Input, initTE } = await import(
@@ -27,32 +29,25 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Fetch users from the API
     try {
       const response = await fetch(
         "https://6451148ae1f6f1bb22a76d28.mockapi.io/api/v1/user"
       );
       const userData = await response.json();
-
-      // Find the user by email
       const user = userData.find((user) => user.email === email);
 
       if (!user) {
         router.push("/register");
       }
 
-      // Check if the password matches
       if (user.password === password) {
-        // Login successful
-        console.log("Login successful");
+        login(user.email, user.name, user.surname, user.gender);
         setLoginError("");
         router.push("/home");
       } else {
-        // Password is incorrect
         setLoginError("Incorrect password");
       }
     } catch (error) {
-      // Handle network or other errors
       console.error("An error occurred:", error);
     }
   };
@@ -108,7 +103,7 @@ const LoginForm = () => {
                 </div>
                 <div className="relative">
                   <button
-                    type="button"
+                    type="submit"
                     className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                     data-te-ripple-init
                     data-te-ripple-color="light"

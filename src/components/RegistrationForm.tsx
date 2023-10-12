@@ -7,7 +7,7 @@ const RegistrationForm = () => {
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState<number>(0);
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [registrationError, setRegistrationError] = useState("");
 
@@ -37,7 +37,7 @@ const RegistrationForm = () => {
     setPassword(e.target.value);
   };
   const handleGenderChange = (e) => {
-    setGender(e.target.value);
+    setGender(parseInt(e.target.value, 10));
   };
   const handleDateOfBirthChange = (e) => {
     setDateOfBirth(e.target.value);
@@ -64,7 +64,7 @@ const RegistrationForm = () => {
           body: JSON.stringify(registrationData),
         }
       );
-
+      console.log(registrationData);
       if (response.ok) {
         router.push("/login");
       } else {
@@ -172,9 +172,8 @@ const RegistrationForm = () => {
                     required
                   >
                     <option value="">Select Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
                   </select>
                 </div>
                 <div className="relative" data-te-datepicker-init>
@@ -193,16 +192,15 @@ const RegistrationForm = () => {
                   </label>
                 </div>
 
-                  <div className="relative">
-                    <button
-                      type="button"
-                      className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-                      data-te-ripple-init
-                      data-te-ripple-color="light"
-                    >
-                      Button
-                    </button>
-              
+                <div className="relative">
+                  <button
+                    type="submit"
+                    className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                    data-te-ripple-init
+                    data-te-ripple-color="light"
+                  >
+                    Button
+                  </button>
                 </div>
               </div>
             </form>
