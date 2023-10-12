@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import bus_data from "../data/bus_data.json";
 import { useUserContext } from "@/context/UserContext";
+import { useJourneyContext } from "@/context/JourneyContext";
 
 interface SeatStatus {
   [seatNumber: string]: number;
@@ -9,11 +10,24 @@ interface SeatStatus {
 function BusLayout() {
   const seatStatus: SeatStatus = bus_data.bus;
   const { user } = useUserContext();
+  const { bookedSeatCount, updateBookedSeatCount } = useJourneyContext();
+
+  //Increase or decrease the count with checkbox
+  const handleCheckboxChange = (seatNumber: number, checked: boolean) => {
+    if (checked) {
+      updateBookedSeatCount(bookedSeatCount + 1);
+    } else {
+      updateBookedSeatCount(bookedSeatCount - 1);
+    }
+  };
+  useEffect(() => {
+    console.log("seat", bookedSeatCount);
+    console.log(user);
+  }, [bookedSeatCount]);
 
   // this is for avoiding repetitive coding
   const renderSeats = (start: number, end: number) => {
     const seats: JSX.Element[] = [];
-    console.log(user);
 
     for (let seatNumber = start; seatNumber <= end; seatNumber++) {
       const isMale = user?.gender === 1;
@@ -35,6 +49,7 @@ function BusLayout() {
           <input
             type="checkbox"
             id={seatNumber.toString()}
+            onChange={(e) => handleCheckboxChange(seatNumber, e.target.checked)}
             disabled={
               isNextSeatDisabled || seatStatus[seatNumber.toString()] !== 0
             }
@@ -72,7 +87,7 @@ function BusLayout() {
   };
 
   return (
-    <div className="plane">
+    <div className="bus">
       <div className="cockpit">
         <div className="steeringclass">
           <img
@@ -120,6 +135,7 @@ function BusLayout() {
               <input
                 type="checkbox"
                 id="25"
+                onChange={(e) => handleCheckboxChange(25, e.target.checked)}
                 disabled={disableForMiddleDoor(25) || seatStatus[25] !== 0}
               />
               <label for="25">25</label>
@@ -134,6 +150,7 @@ function BusLayout() {
               <input
                 type="checkbox"
                 id="26"
+                onChange={(e) => handleCheckboxChange(26, e.target.checked)}
                 disabled={disableForMiddleDoor(26) || seatStatus[26] !== 0}
               />
               <label for="26">26</label>

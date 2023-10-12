@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import BusRouteList from "./BusRouteList";
+import { useForm } from "react-hook-form";
 
 function BusRoute() {
   useEffect(() => {
     const init = async () => {
       const { Dropdown, Ripple, Datepicker, Input, Select, initTE } =
         await import("tw-elements");
-      initTE({ Dropdown, Select, Ripple, Datepicker, Input });
+      initTE({ Dropdown, Ripple, Select, Datepicker, Input });
     };
     init();
   }, []);
+
+ 
+
   const [busRouteData, setBusRouteData] = useState([]);
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -17,6 +21,13 @@ function BusRoute() {
   const [filteredData, setFilteredData] = useState([]);
   const [submitClicked, setSubmitClicked] = useState(false);
   const [showNoJourneyFound, setShowNoJourneyFound] = useState(false);
+  const cities = ["-", "İstanbul", "Ankara", "İzmir", "Samsun"];
+
+  const handleFromChange = (e) => {
+    const selectedFrom = e.target.value;
+    setFrom(selectedFrom);
+  };
+
   const fetchDataAndFilter = async () => {
     try {
       const response = await fetch(
@@ -28,13 +39,9 @@ function BusRoute() {
       }
 
       const data = await response.json();
-      const filtered = data.filter((route) => {
-        return (
-          (from === "" || route.from === from) &&
-          (to === "" || route.to === to) &&
-          (date === "" || route.date === date) &&
-          (from !== "" || to !== "" || date !== "")
-        );
+      console.log(data);
+      const filtered = data?.filter((route) => {
+        return route.from === from && route.to === to && route.date === date;
       });
       setFilteredData(filtered);
       setSubmitClicked(true);
@@ -42,7 +49,7 @@ function BusRoute() {
         setShowNoJourneyFound(true);
         setTimeout(() => {
           setShowNoJourneyFound(false);
-        }, 3000); 
+        }, 3000);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -51,6 +58,7 @@ function BusRoute() {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchDataAndFilter();
+    console.log(date);
   };
 
   return (
@@ -66,42 +74,34 @@ function BusRoute() {
         <div className="mb-4">
           <label>From</label>
           <select onChange={(e) => setFrom(e.target.value)} data-te-select-init>
-            <option value="İstanbul">İstanbul</option>
-            <option value="Ankara">Ankara</option>
-            <option value="İzmir">İzmir</option>
-            <option value="Samsun">Samsun</option>
+            {cities.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
           </select>
         </div>
         <div className="mb-4">
           <label>To</label>
           <select onChange={(e) => setTo(e.target.value)} data-te-select-init>
-            <option value="İstanbul">İstanbul</option>
-            <option value="Ankara">Ankara</option>
-            <option value="İzmir">İzmir</option>
-            <option value="Samsun">Samsun</option>
+            {cities.map((option) => (
+              <option key={option} value={option} disabled={option === from}>
+                {option}
+              </option>
+            ))}
           </select>
         </div>
         <div className="mb-6">
           <label>Date</label>
-          <div
-            className="relative"
-            data-te-datepicker-init
-            data-te-input-wrapper-init
-          >
+          <div className="relative mb-3">
             <input
-              onChange={(e) => setDate(e.target.value)}
-              type="text"
-              className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+              type="date"
+              className="peer block min-h-[auto] w-full rounded border-[1px] border-gray-300 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none "
               placeholder="Select a date"
-              data-te-datepicker-toggle-ref
-              data-te-datepicker-toggle-button-ref
+              onChange={(e) => {
+                setDate(e.target.value);
+              }}
             />
-            <label
-              for="floatingInput"
-              class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-            >
-              Select a date
-            </label>
           </div>
         </div>
         <div className="relative">

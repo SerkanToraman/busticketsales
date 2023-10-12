@@ -2,13 +2,22 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { useJourneyContext } from "@/context/JourneyContext";
 
-function BusRouteList({ filteredData }) {
+interface Route {
+  id: number;
+  from: string;
+  to: string;
+  date: string;
+  time: string;
+  emptySeatCount: number;
+  price: number;
+}
+
+function BusRouteList({ filteredData }: { filteredData: Route[] }) {
   const router = useRouter();
   const { journeyData, setJourneyData } = useJourneyContext();
 
-
   const handleBuyClick = (route) => {
-    setJourneyData([...journeyData, route]);
+    setJourneyData(route);
     router.push("/ticketsales");
   };
   return (
@@ -62,11 +71,17 @@ function BusRouteList({ filteredData }) {
                     <td className="whitespace-nowrap px-6 py-4">
                       {route.price}
                     </td>
-                    <td className="whitespace-nowrap px-6 py-4">
-                      <button onClick={()=>{
-                        handleBuyClick(route);
-                        router.push("/ticketsales");
-                      }}>Buy</button>
+                    <td className="whitespace-nowrap px-4 py-4">
+                      <button
+                        className="inline-block rounded bg-primary px-4 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                        data-te-ripple-init
+                        data-te-ripple-color="light"
+                        onClick={() => {
+                          handleBuyClick(route);
+                        }}
+                      >
+                        Buy
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -80,4 +95,3 @@ function BusRouteList({ filteredData }) {
 }
 
 export default BusRouteList;
-
