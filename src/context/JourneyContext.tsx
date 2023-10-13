@@ -13,26 +13,34 @@ interface Journey {
 
 interface JourneyContextType {
   journeyData: Journey[];
+  currentJourney: Journey | null;
   bookedSeatCount: number; // New property for booked seat count
   updateBookedSeatCount: (count: number) => void;
+  updateCurrentJourney: (journey: Journey | null) => void;
 }
 
 const JourneyContext = createContext<JourneyContextType | undefined>(undefined);
 export function JourneyContextProvider({ children }: { children: ReactNode }) {
   const [journeyData, setJourneyData] = useState<Journey[]>([]);
+  const [currentJourney, setCurrentJourney] = useState<Journey | null>(null);
   const [bookedSeatCount, setBookedSeatCount] = useState(0);
 
   const updateBookedSeatCount = (count: number) => {
     setBookedSeatCount(count);
+  };
+  const updateCurrentJourney = (journey: Journey | null) => {
+    setCurrentJourney(journey);
   };
 
   return (
     <JourneyContext.Provider
       value={{
         journeyData,
+        currentJourney,
         setJourneyData,
         bookedSeatCount,
         updateBookedSeatCount,
+        updateCurrentJourney,
       }}
     >
       {children}

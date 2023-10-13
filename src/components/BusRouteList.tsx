@@ -14,10 +14,10 @@ interface Route {
 
 function BusRouteList({ filteredData }: { filteredData: Route[] }) {
   const router = useRouter();
-  const { journeyData, setJourneyData } = useJourneyContext();
+  const { journeyData, setJourneyData,updateCurrentJourney } = useJourneyContext();
 
   const handleBuyClick = (route) => {
-    setJourneyData(route);
+    updateCurrentJourney(route);
     router.push("/ticketsales");
   };
   return (

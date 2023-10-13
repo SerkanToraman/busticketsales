@@ -10,17 +10,17 @@ interface SeatStatus {
 
 function BusLayout() {
   const { user } = useUserContext();
-  const { bookedSeatCount, updateBookedSeatCount, journeyData } =
+  const { bookedSeatCount, updateBookedSeatCount, currentJourney } =
     useJourneyContext();
   //const seatStatus: SeatStatus = bus_data.bus;
   const [seatStatus, setSeatStatus] = useState<SeatStatus>({});
 
   useEffect(() => {
-      const generatedSeats = generateSeats(journeyData.?emptySeatCount, 54);
+      const generatedSeats = generateSeats(currentJourney?.emptySeatCount, 54);
       
       setSeatStatus(generatedSeats);     
     
-  }, [journeyData.emptySeatCount]);
+  }, [currentJourney]);
 
   //Increase or decrease the count with checkbox
   const handleCheckboxChange = (seatNumber: number, checked: boolean) => {
