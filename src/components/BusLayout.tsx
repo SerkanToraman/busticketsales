@@ -16,7 +16,7 @@ function BusLayout() {
   const [seatStatus, setSeatStatus] = useState<SeatStatus>({});
 
   useEffect(() => {
-      const generatedSeats = generateSeats(journeyData.emptySeatCount, 54);
+      const generatedSeats = generateSeats(journeyData.?emptySeatCount, 54);
       
       setSeatStatus(generatedSeats);     
     
