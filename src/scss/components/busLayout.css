@@ -1,6 +1,8 @@
 .bus {
   margin: 20px auto;
   max-width: 250px;
+  z-index: 5;
+  overflow: auto;
 }
 
 .cockpit {

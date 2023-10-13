@@ -12,8 +12,6 @@ function BusRoute() {
     init();
   }, []);
 
- 
-
   const [busRouteData, setBusRouteData] = useState([]);
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -63,7 +61,7 @@ function BusRoute() {
 
   return (
     //Double check with for responsiveness
-    <div className="relative flex flex-col items-centre w-[42rem]">
+    <div className="busRoute relative flex flex-col items-centre">
       <form
         onSubmit={handleSubmit}
         className="min-h-fit p-3 md:p-6  block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 "
@@ -71,7 +69,7 @@ function BusRoute() {
         <h5 className="mb-2 text-[2rem] font-medium leading-tight text-neutral-800 dark:text-neutral-50">
           Select Travel
         </h5>
-        <div className="mb-4">
+        <div className="mb-4 w-full">
           <label>From</label>
           <select onChange={(e) => setFrom(e.target.value)} data-te-select-init>
             {cities.map((option) => (

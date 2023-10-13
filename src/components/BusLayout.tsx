@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import bus_data from "../data/bus_data.json";
+import generateSeats from "@/helper/GenerateSeats";
 import { useUserContext } from "@/context/UserContext";
 import { useJourneyContext } from "@/context/JourneyContext";
 
@@ -8,9 +9,18 @@ interface SeatStatus {
 }
 
 function BusLayout() {
-  const seatStatus: SeatStatus = bus_data.bus;
   const { user } = useUserContext();
-  const { bookedSeatCount, updateBookedSeatCount } = useJourneyContext();
+  const { bookedSeatCount, updateBookedSeatCount, journeyData } =
+    useJourneyContext();
+  //const seatStatus: SeatStatus = bus_data.bus;
+  const [seatStatus, setSeatStatus] = useState<SeatStatus>({});
+
+  useEffect(() => {
+      const generatedSeats = generateSeats(journeyData.emptySeatCount, 54);
+      
+      setSeatStatus(generatedSeats);     
+    
+  }, [journeyData.emptySeatCount]);
 
   //Increase or decrease the count with checkbox
   const handleCheckboxChange = (seatNumber: number, checked: boolean) => {

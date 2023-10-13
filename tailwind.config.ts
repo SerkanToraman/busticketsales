@@ -10,6 +10,7 @@ const config: Config = {
     // "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
   ],
   theme: {
+  
     extend: {
       backgroundImage: {
         // 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

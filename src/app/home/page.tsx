@@ -4,7 +4,7 @@ import BusRoute from "@/components/BusRoute";
 
 const HomePage = () => {
   return (
-    <section className="min-h-screen bg-gray-100  flex  justify-center items-center">
+    <section className="min-h-screen bg-gray-100  flex  justify-center items-center sm:w-screen">
      <BusRoute/>
     </section>
   );

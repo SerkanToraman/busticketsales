@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 function SuccessCard() {
   return (
@@ -21,12 +22,12 @@ function SuccessCard() {
         </p>
         <p> Have a great day! </p>
         <div className="py-10 text-center">
-          <a
-            href="#"
+          <Link
+            href="/login"
             className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3"
           >
             GO BACK
-          </a>
+          </Link>
         </div>
       </div>
     </div>

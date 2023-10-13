@@ -1,0 +1,9 @@
+.busRoute {
+  width: 42rem;
+}
+
+@media (max-width: 600px) {
+  .busRoute {
+    width: 100%;
+  }
+}/*# sourceMappingURL=busRoute.css.map */

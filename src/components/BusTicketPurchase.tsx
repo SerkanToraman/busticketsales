@@ -42,7 +42,7 @@ function BusTicketPurchase(): JSX.Element {
     router.push("/payment");
   };
   return (
-    <div className="rounded-lg bg-white shadow-lg dark:bg-neutral-700 text-center">
+    <div className="sticky top-0 z-10 rounded-lg bg-white shadow-lg dark:bg-neutral-700 text-center">
       <div className="border-b-2 border-neutral-100 px-6 py-4 dark:border-neutral-500">
         <h5 className="flex items-center justify-center text-neutral-500 dark:text-neutral-300">
           <span className="mr-2">{user?.name}</span>
@@ -54,7 +54,7 @@ function BusTicketPurchase(): JSX.Element {
             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                 <div className="overflow-hidden">
-                  <table className="min-w-full text-left text-sm font-light">
+                  <table className="min-w-full text-left text-xs sm:txt-sm font-light">
                     <tbody>
                       <tr className="">
                         <td className="whitespace-nowrap px-6 py-2">From</td>
@@ -90,7 +90,7 @@ function BusTicketPurchase(): JSX.Element {
             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                 <div className="overflow-hidden">
-                  <table className="min-w-full text-left text-sm font-light">
+                  <table className="min-w-full text-left text-xs sm:txt-sm  font-light">
                     <tbody>
                       <tr className="">
                         <td className="whitespace-nowrap px-6 py-2">-</td>

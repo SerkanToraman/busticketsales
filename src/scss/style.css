@@ -1,6 +1,8 @@
 .bus {
   margin: 20px auto;
   max-width: 250px;
+  z-index: 5;
+  overflow: auto;
 }
 
 .cockpit {
@@ -279,5 +281,14 @@ ol {
   }
   100% {
     transform: rotate(90deg);
+  }
+}
+.busRoute {
+  width: 42rem;
+}
+
+@media (max-width: 600px) {
+  .busRoute {
+    width: 100%;
   }
 }/*# sourceMappingURL=style.css.map */

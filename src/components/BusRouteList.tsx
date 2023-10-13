@@ -21,14 +21,14 @@ function BusRouteList({ filteredData }: { filteredData: Route[] }) {
     router.push("/ticketsales");
   };
   return (
-    <div className="w-[42rem] flex flex-col">
+    <div className="sm:w-full md:w-[42rem] flex flex-col">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
           <div className="overflow-hidden block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 ">
             <table className="min-w-full text-left text-sm font-light">
               <thead className="border-b font-medium dark:border-neutral-500">
                 <tr>
-                  <th scope="col" className="px-6 py-4">
+                  <th scope="col" className="px-6 py-4 ">
                     From
                   </th>
                   <th scope="col" className="px-6 py-4">
@@ -58,7 +58,9 @@ function BusRouteList({ filteredData }: { filteredData: Route[] }) {
                     <td className="whitespace-nowrap px-6 py-4">
                       {route.from}
                     </td>
-                    <td className="whitespace-nowrap px-6 py-4">{route.to}</td>
+                    <td className="whitespace-nowrap px-6 py-4">
+                      {route.to}
+                    </td>
                     <td className="whitespace-nowrap px-6 py-4">
                       {route.date}
                     </td>
