@@ -66,6 +66,7 @@ const Payment = () => {
       router.push("/success");
     }
   };
+  const totalPrice = currentJourney ? bookedSeatCount * currentJourney.price : 0;
 
   return (
     <section className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
@@ -131,7 +132,7 @@ const Payment = () => {
               </div>
             </div>
             <p className="text-lg text-center mt-4 text-gray-600 font-semibold">
-              Payment amount: ₺{bookedSeatCount * currentJourney.price}
+              Payment amount: ₺{totalPrice}
             </p>
             <div className="flex justify-center mt-4">
               <button
