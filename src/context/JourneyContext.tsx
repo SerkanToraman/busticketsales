@@ -13,7 +13,7 @@ interface Journey {
 
 interface JourneyContextType {
   journeyData: Journey[];
-  currentJourney: Journey | null;
+  currentJourney: Journey;
   bookedSeatCount: number; // New property for booked seat count
   updateBookedSeatCount: (count: number) => void;
   updateCurrentJourney: (journey: Journey | null) => void;

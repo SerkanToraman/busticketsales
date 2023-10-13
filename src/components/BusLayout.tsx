@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import bus_data from "../data/bus_data.json";
 import generateSeats from "@/helper/GenerateSeats";
 import { useUserContext } from "@/context/UserContext";
@@ -16,10 +16,9 @@ function BusLayout() {
   const [seatStatus, setSeatStatus] = useState<SeatStatus>({});
 
   useEffect(() => {
-      const generatedSeats = generateSeats(currentJourney?.emptySeatCount, 54);
-      
-      setSeatStatus(generatedSeats);     
-    
+    const generatedSeats = generateSeats(currentJourney?.emptySeatCount, 54);
+
+    setSeatStatus(generatedSeats);
   }, [currentJourney]);
 
   //Increase or decrease the count with checkbox
