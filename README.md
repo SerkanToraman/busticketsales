@@ -43,4 +43,6 @@ Case study'de belirtilen tüm kuralların uygulanması hedeflenmiştir.
 
 Projeyi github'dan projeyi clonlayıp, terminale npm run dev komutunu çalıştırarak localde çalıştırabilirsiniz.
 
+Not. Otabüs seferleri sadece 16.10.2023'e eklenmiştir. Diğer günlerde uygun sefer bulunmayacaktır.
+
 
