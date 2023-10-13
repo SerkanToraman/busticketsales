@@ -141,13 +141,10 @@ const RegistrationForm = () => {
                     type="text"
                     className="pl-1 peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none"
                     placeholder="Select a date"
-                    {...register("dateOfBirth", { required: true,
-                      pattern: {
-                        value: /^(0[1-9]|1[0-2])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d{2}$/,
-                        message: "Invalid date format. Please use MM/DD/YYYY",
-                      }, })}
+                    {...register("dateOfBirth", {required: true})}
                     data-te-datepicker-toggle-ref
                     data-te-datepicker-toggle-button-ref
+                    //To do regex
                   />
                   <label
                     htmlFor="floatingInput"
