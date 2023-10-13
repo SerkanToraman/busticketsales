@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { SubmitHandler,FieldValues } from "react-hook-form";
+
+
 
 const RegistrationForm = () => {
   const router = useRouter();
@@ -19,8 +22,8 @@ const RegistrationForm = () => {
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
-  const onSubmit = async (data) => {
-    data.gender = parseInt(data.gender);
+  const onSubmit: SubmitHandler<FieldValues> = async (data: FieldValues) => {
+    data.gender = parseInt(data.gender, 10);
     try {
       const response = await fetch(
         "https://6451148ae1f6f1bb22a76d28.mockapi.io/api/v1/user",
@@ -69,8 +72,8 @@ const RegistrationForm = () => {
                     {...register("email", { required: true })}
                   />
                   <label
-                    for="email"
-                    class="pl-1 absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
+                    htmlFor="email"
+                    className="pl-1 absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
                   >
                     Email Address
                   </label>
@@ -85,7 +88,7 @@ const RegistrationForm = () => {
                   />
 
                   <label
-                    for="password"
+                    htmlFor="password"
                     className="pl-1 absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
                   >
                     Password
@@ -101,7 +104,7 @@ const RegistrationForm = () => {
                     {...register("name", { required: true })}
                   />
                   <label
-                    for="name"
+                    htmlFor="name"
                     className="pl-1 absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
                   >
                     Name
@@ -116,7 +119,7 @@ const RegistrationForm = () => {
                     {...register("surname", { required: true })}
                   />
                   <label
-                    for="surname"
+                    htmlFor="surname"
                     className=" pl-1 absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
                   >
                     Surname

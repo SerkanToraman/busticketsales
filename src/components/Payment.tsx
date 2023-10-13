@@ -6,14 +6,14 @@ import { useJourneyContext } from "@/context/JourneyContext";
 const Payment = () => {
   const router = useRouter();
   const { user } = useUserContext();
-  const { journeyData, bookedSeatCount } = useJourneyContext();
-  const [cardholder, setCardholder] = useState(user?.name);
+  const { currentJourney, bookedSeatCount } = useJourneyContext();
+  const [cardholder, setCardholder] = useState(user?.name || "");
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
   const [ccv, setCcv] = useState("");
-  const [inputError, setInputError] = useState();
+  const [inputError, setInputError] = useState("");
 
-  const handleCardNumberChange = (e) => {
+  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const sanitizedValue = value.replace(/\D/g, "");
     if (sanitizedValue.length > 16) {
@@ -22,7 +22,7 @@ const Payment = () => {
     const formattedValue = sanitizedValue.replace(/(\d{4})/g, "$1 ").trim();
     setCardNumber(formattedValue);
   };
-  const handleCvvChange = (e) => {
+  const handleCvvChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const sanitizedValue = value.replace(/\D/g, "");
     if (sanitizedValue.length > 3) {
@@ -30,7 +30,7 @@ const Payment = () => {
     }
     setCcv(sanitizedValue);
   };
-  const handleExpiryChange = (e) => {
+  const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const sanitizedValue = value.replace(/\D/g, "");
     if (sanitizedValue.length > 4) {
@@ -45,7 +45,10 @@ const Payment = () => {
 
   const handlePayClick = () => {
     let error = "";
-    if (cardholder?.trim() === "" || cardholder?.trim().length < 3) {
+    if (
+      (cardholder && cardholder?.trim() === "") ||
+      cardholder.trim().length < 3
+    ) {
       error = "Please enter a valid cardholder name with at least 3 characters";
     } else if (cardNumber.replace(/\D/g, "").length !== 16) {
       error = "Please enter a valid 16-digit card number";
@@ -128,7 +131,7 @@ const Payment = () => {
               </div>
             </div>
             <p className="text-lg text-center mt-4 text-gray-600 font-semibold">
-              Payment amount: ₺{bookedSeatCount * journeyData?.price}
+              Payment amount: ₺{bookedSeatCount * currentJourney.price}
             </p>
             <div className="flex justify-center mt-4">
               <button

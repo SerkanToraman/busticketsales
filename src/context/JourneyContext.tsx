@@ -36,8 +36,7 @@ export function JourneyContextProvider({ children }: { children: ReactNode }) {
     <JourneyContext.Provider
       value={{
         journeyData,
-        currentJourney,
-        setJourneyData,
+        currentJourney: currentJourney as Journey,
         bookedSeatCount,
         updateBookedSeatCount,
         updateCurrentJourney,

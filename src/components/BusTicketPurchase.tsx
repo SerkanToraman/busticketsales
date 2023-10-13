@@ -8,9 +8,9 @@ import { Tiro_Telugu } from "next/font/google";
 
 function BusTicketPurchase(): JSX.Element {
   const router = useRouter();
-  const { journeyData, bookedSeatCount } = useJourneyContext();
+  const { bookedSeatCount, currentJourney } = useJourneyContext();
   const { user } = useUserContext();
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   useEffect(() => {
     // Check if user is null when the page is mounted
     if (user === null) {
@@ -39,8 +39,24 @@ function BusTicketPurchase(): JSX.Element {
   }, [bookedSeatCount]);
 
   const handleBuyClick = () => {
-    router.push("/payment");
+    if (bookedSeatCount === 0) {
+      const notify = () =>
+        toast.warn("No seat is reserved", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      notify();
+    } else {
+      router.push("/payment");
+    }
   };
+
   return (
     <div className="sticky top-0 z-10 rounded-lg bg-white shadow-lg dark:bg-neutral-700 text-center">
       <div className="border-b-2 border-neutral-100 px-6 py-4 dark:border-neutral-500">
@@ -59,25 +75,25 @@ function BusTicketPurchase(): JSX.Element {
                       <tr className="">
                         <td className="whitespace-nowrap px-6 py-2">From</td>
                         <td className="whitespace-nowrap px-6 py-2">
-                          {journeyData?.from}
+                          {currentJourney?.from}
                         </td>
                       </tr>
                       <tr className="">
                         <td className="whitespace-nowrap px-6 py-2">To</td>
                         <td className="whitespace-nowrap px-6 py-2">
-                          {journeyData?.to}
+                          {currentJourney?.to}
                         </td>
                       </tr>
                       <tr className="">
                         <td className="whitespace-nowrap px-6 py-2">Date</td>
                         <td className="whitespace-nowrap px-6 py-2">
-                          {journeyData?.date}
+                          {currentJourney?.date}
                         </td>
                       </tr>
                       <tr className="border-b dark:border-neutral-500">
                         <td className="whitespace-nowrap px-6 py-2">Time</td>
                         <td className="whitespace-nowrap px-6 py-2">
-                          {journeyData?.time}
+                          {currentJourney?.time}
                         </td>
                       </tr>
                     </tbody>
@@ -101,7 +117,7 @@ function BusTicketPurchase(): JSX.Element {
                           Single Ticket
                         </td>
                         <td className="whitespace-nowrap px-6 py-2">
-                          ₺{journeyData?.price}
+                          ₺{currentJourney?.price}
                         </td>
                       </tr>
                       <tr className="">
@@ -120,7 +136,7 @@ function BusTicketPurchase(): JSX.Element {
                           ₺
                           {bookedSeatCount === 0
                             ? 0
-                            : bookedSeatCount * journeyData?.price}
+                            : bookedSeatCount * currentJourney?.price}
                         </td>
                       </tr>
                     </tbody>

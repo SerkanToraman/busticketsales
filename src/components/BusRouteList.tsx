@@ -14,9 +14,9 @@ interface Route {
 
 function BusRouteList({ filteredData }: { filteredData: Route[] }) {
   const router = useRouter();
-  const { journeyData, setJourneyData,updateCurrentJourney } = useJourneyContext();
+  const { journeyData,updateCurrentJourney } = useJourneyContext();
 
-  const handleBuyClick = (route) => {
+  const handleBuyClick = (route:Route) => {
     updateCurrentJourney(route);
     router.push("/ticketsales");
   };

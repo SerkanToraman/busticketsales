@@ -21,7 +21,7 @@ function BusRoute() {
   const [showNoJourneyFound, setShowNoJourneyFound] = useState(false);
   const cities = ["-", "İstanbul", "Ankara", "İzmir", "Samsun"];
 
-  const handleFromChange = (e) => {
+  const handleFromChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFrom = e.target.value;
     setFrom(selectedFrom);
   };
@@ -38,9 +38,11 @@ function BusRoute() {
 
       const data = await response.json();
       console.log(data);
-      const filtered = data?.filter((route) => {
-        return route.from === from && route.to === to && route.date === date;
-      });
+      const filtered = data?.filter(
+        (route: { from: string; to: string; date: string }) => {
+          return route.from === from && route.to === to && route.date === date;
+        }
+      );
       setFilteredData(filtered);
       setSubmitClicked(true);
       if (filtered.length === 0) {
@@ -53,7 +55,7 @@ function BusRoute() {
       console.error("Error fetching data:", error);
     }
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     fetchDataAndFilter();
     console.log(date);

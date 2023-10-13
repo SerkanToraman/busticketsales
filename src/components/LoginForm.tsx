@@ -3,6 +3,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/context/UserContext";
 
+interface User {
+  email: string;
+  password: string;
+  name: string;
+  surname: string;
+  gender: number;
+}
 const LoginForm = () => {
   const { user, login, logout } = useUserContext();
   useEffect(() => {
@@ -19,37 +26,39 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       const response = await fetch(
         "https://6451148ae1f6f1bb22a76d28.mockapi.io/api/v1/user"
       );
-      const userData = await response.json();
-      const user = userData.find((user) => user.email === email);
+      const userData: User[] = await response.json();
+      const user: User | undefined = userData.find(
+        (user) => user.email === email
+      );
 
       if (!user) {
         router.push("/register");
-      }
-
-      if (user.password === password) {
-        login(user.email, user.name, user.surname, user.gender);
-        setLoginError("");
-        router.push("/home");
       } else {
-        setLoginError("Incorrect password");
-        setTimeout(() => {
+        if (user.password === password) {
+          login(user.email, user.name, user.surname, user.gender);
           setLoginError("");
-        }, 2000);
+          router.push("/home");
+        } else {
+          setLoginError("Incorrect password");
+          setTimeout(() => {
+            setLoginError("");
+          }, 2000);
+        }
       }
     } catch (error) {
       console.error("An error occurred:", error);
@@ -80,8 +89,8 @@ const LoginForm = () => {
                     required
                   />
                   <label
-                    for="email"
-                    class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
+                    htmlFor="email"
+                    className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
                   >
                     Email Address
                   </label>
@@ -99,7 +108,7 @@ const LoginForm = () => {
                     required
                   />
                   <label
-                    for="password"
+                    htmlFor="password"
                     className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
                   >
                     Password

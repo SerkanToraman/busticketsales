@@ -147,7 +147,7 @@ function BusLayout() {
                 onChange={(e) => handleCheckboxChange(25, e.target.checked)}
                 disabled={disableForMiddleDoor(25) || seatStatus[25] !== 0}
               />
-              <label for="25">25</label>
+              <label htmlFor="25">25</label>
               {seatStatus["25"] === 1 && (
                 <img className="seat-image" src="/male.png" alt="Male" />
               )}
@@ -162,7 +162,7 @@ function BusLayout() {
                 onChange={(e) => handleCheckboxChange(26, e.target.checked)}
                 disabled={disableForMiddleDoor(26) || seatStatus[26] !== 0}
               />
-              <label for="26">26</label>
+              <label htmlFor="26">26</label>
               {seatStatus["26"] === 1 && (
                 <img className="seat-image" src="/male.png" alt="Male" />
               )}
