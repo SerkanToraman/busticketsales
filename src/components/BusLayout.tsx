@@ -17,7 +17,6 @@ function BusLayout() {
 
   useEffect(() => {
     const generatedSeats = generateSeats(currentJourney?.emptySeatCount, 54);
-
     setSeatStatus(generatedSeats);
   }, [currentJourney]);
 
@@ -27,11 +26,10 @@ function BusLayout() {
       updateBookedSeatCount(bookedSeatCount + 1);
     } else {
       updateBookedSeatCount(bookedSeatCount - 1);
-    }
+    } 
   };
   useEffect(() => {
-    console.log("seat", bookedSeatCount);
-    console.log(user);
+
   }, [bookedSeatCount]);
 
   // this is for avoiding repetitive coding
@@ -53,6 +51,7 @@ function BusLayout() {
       // If the next seat has a different gender, disable it
       const isNextSeatDisabled =
         (isMale && nextSeatIsFemale) || (isFemale && nextSeatIsMale);
+
       seats.push(
         <li className="seat" key={seatNumber}>
           <input
@@ -60,7 +59,8 @@ function BusLayout() {
             id={seatNumber.toString()}
             onChange={(e) => handleCheckboxChange(seatNumber, e.target.checked)}
             disabled={
-              isNextSeatDisabled || seatStatus[seatNumber.toString()] !== 0
+              isNextSeatDisabled ||
+              seatStatus[seatNumber.toString()] !== 0
             }
           />
           <label htmlFor={seatNumber.toString()}>{seatNumber}</label>

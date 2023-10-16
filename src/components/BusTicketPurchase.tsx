@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useJourneyContext } from "@/context/JourneyContext";
 import { useUserContext } from "@/context/UserContext";
@@ -11,6 +11,8 @@ function BusTicketPurchase(): JSX.Element {
   const { bookedSeatCount, currentJourney } = useJourneyContext();
   const { user } = useUserContext();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [errorDisplayed, setErrorDisplayed] = useState(false);
+  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   useEffect(() => {
     // Check if user is null when the page is mounted
     if (user === null) {
@@ -20,21 +22,31 @@ function BusTicketPurchase(): JSX.Element {
 
   useEffect(() => {
     if (bookedSeatCount > 5) {
-      const notify = () =>
-        toast.warn("You can buy maximum 5 tickets", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      notify();
-      setIsButtonDisabled(true);
+      if (!errorDisplayed) {
+        const notify = () =>
+          toast.warn("You can buy maximum 5 tickets", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        notify();
+        setErrorDisplayed(true);
+      }
+
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+      debounceTimeoutRef.current = setTimeout(() => {
+        setIsButtonDisabled(true);
+      }, 500); 
     } else {
       setIsButtonDisabled(false);
+      setErrorDisplayed(false);
     }
   }, [bookedSeatCount]);
 
