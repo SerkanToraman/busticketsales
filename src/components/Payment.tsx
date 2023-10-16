@@ -66,7 +66,9 @@ const Payment = () => {
       router.push("/success");
     }
   };
-  const totalPrice = currentJourney ? bookedSeatCount * currentJourney.price : 0;
+  const totalPrice = currentJourney
+    ? bookedSeatCount * currentJourney.price
+    : 0;
 
   return (
     <section className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
@@ -145,6 +147,7 @@ const Payment = () => {
                 Pay
               </button>
             </div>
+            <p className="mt-2 text-xs">Please use random numbers</p>
             {inputError && (
               <p className="text-red-600 text-sm pt-4"> {inputError} </p>
             )}

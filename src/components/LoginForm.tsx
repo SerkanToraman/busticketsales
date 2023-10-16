@@ -94,6 +94,7 @@ const LoginForm = () => {
                   >
                     Email Address
                   </label>
+                  <p className="mt-2 text-xs">For test: serkan@hotmail.com</p>
                 </div>
                 <div className="relative">
                   <input
@@ -113,6 +114,7 @@ const LoginForm = () => {
                   >
                     Password
                   </label>
+                  <p className="mt-2 text-xs">For test: 1234</p>
                 </div>
                 <div className="relative flex items-center justify-center pt-4">
                   <button
@@ -129,6 +131,8 @@ const LoginForm = () => {
                     Register
                   </Link>
                 </div>
+                
+    
 
                 {loginError && (
                   <p className="text-red-600 text-sm  text-center">
