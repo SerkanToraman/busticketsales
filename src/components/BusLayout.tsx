@@ -14,11 +14,16 @@ function BusLayout() {
     useJourneyContext();
   //const seatStatus: SeatStatus = bus_data.bus;
   const [seatStatus, setSeatStatus] = useState<SeatStatus>({});
+  const [checkedSeats, setCheckedSeats] = useState<number[]>([]);
 
   useEffect(() => {
     const generatedSeats = generateSeats(currentJourney?.emptySeatCount, 54);
     setSeatStatus(generatedSeats);
   }, [currentJourney]);
+
+  useEffect(()=>{
+    updateBookedSeatCount(0);
+  },[])
 
   //Increase or decrease the count with checkbox
   const handleCheckboxChange = (seatNumber: number, checked: boolean) => {
@@ -26,11 +31,9 @@ function BusLayout() {
       updateBookedSeatCount(bookedSeatCount + 1);
     } else {
       updateBookedSeatCount(bookedSeatCount - 1);
-    } 
+    }
   };
-  useEffect(() => {
-
-  }, [bookedSeatCount]);
+  useEffect(() => {}, [bookedSeatCount]);
 
   // this is for avoiding repetitive coding
   const renderSeats = (start: number, end: number) => {
@@ -59,8 +62,7 @@ function BusLayout() {
             id={seatNumber.toString()}
             onChange={(e) => handleCheckboxChange(seatNumber, e.target.checked)}
             disabled={
-              isNextSeatDisabled ||
-              seatStatus[seatNumber.toString()] !== 0
+              isNextSeatDisabled || seatStatus[seatNumber.toString()] !== 0
             }
           />
           <label htmlFor={seatNumber.toString()}>{seatNumber}</label>

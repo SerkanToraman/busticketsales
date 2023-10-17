@@ -18,6 +18,7 @@ function BusTicketPurchase(): JSX.Element {
     if (user === null) {
       router.push("/login"); // Redirect to the login page if user is null
     }
+    
   }, []);
 
   useEffect(() => {
